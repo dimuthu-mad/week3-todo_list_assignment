@@ -77,9 +77,30 @@ const removeTodo = (): void => {
 // Update Todo
 const updateTodo = (): void => {
  rl.question("Enter task ID to update: ", (idnum:string ) => {
+  
     const idindex:number = parseInt(idnum);
-    console.log(idindex);
- })
+     rl.question("Enter new task: ", (text3: string) => {
+     if (text3.trim() === "") {
+        console.log("Task cannot be empty!\n");
+      } else {
+        // const newTodo2: Todo = {
+        //   id: Date.now(),
+        //   text: text.trim(),
+      todos.forEach((element, index) => {
+          if(element.id === idindex) {
+            if(todos[index]!.text){
+              todos[index]!.text=text3;
+              console.log(todos[index]?.text);
+            }else{
+              console.log("update error");
+            }
+      }
+    });
+
+        };
+      showMenu();
+      });
+ });
 }
 
 // Handle command logic
@@ -98,6 +119,9 @@ const handleCommand = (command: string): void => {
       console.log("Goodbye!");
       rl.close();
       break;
+    case "update":
+      updateTodo();
+      break;
     default:
       console.log("Unknown command\n");
       showMenu();
@@ -108,7 +132,7 @@ const handleCommand = (command: string): void => {
 const showMenu = (): void => {
   console.clear();
   console.log("\n=== Todo List App ===");
-  console.log("Commands: add, list, remove, exit\n");
+  console.log("Commands: add, list, remove, update, exit\n");
   process.stdout.write("> ");
   rl.question("", (command: string) => {
     handleCommand(command);
