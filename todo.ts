@@ -46,7 +46,7 @@ const addTodo = (): void => {
 const listTodos = (): void => {
   console.clear();
   console.log("\n=== Todo List App ===");
-  console.log("Commands: add, list, remove, update, exit\n");
+  console.log("Commands: add, list, remove, update, clear, exit\n");
 
   if (todos.length === 0) {
     console.log("No todos yet!\n");
@@ -170,7 +170,7 @@ const handleCommand = (command: string): void => {
     case "update":
       updateTodo();
       break;
-    case "clearall":
+    case "clear":
       clearallTodo();
       break;
     default:
@@ -183,7 +183,7 @@ const handleCommand = (command: string): void => {
 const showMenu = (): void => {
   console.clear();
   console.log("\n=== Todo List App ===");
-  console.log("Commands: add, list, remove, update, Clear All, exit\n");
+  console.log("Commands: add, list, remove, update, Clear , exit\n");
   process.stdout.write("> ");
   rl.question("", (command: string) => {
     handleCommand(command);
@@ -192,5 +192,5 @@ const showMenu = (): void => {
 
 // Start the app
 console.log("\n=== Todo List App ===");
-console.log("Commands: add, list, remove, update, Clear All, exit\n");
+console.log("Commands: add, list, remove, update, Clear , exit\n");
 showMenu();
