@@ -66,6 +66,20 @@ const listTodos = (): void => {
   });
 };
 
+const clearallTodo = (): void => {
+  rl.question("Type 'OK' for clear Todo: ", (input: string) => {
+    if (input === "OK") {
+      todos = [];
+      console.log("Todo cleared successfully!\n");
+      setTimeout(() => {
+        showMenu();
+      }, 3000);
+    } else {
+      console.log("Todo not cleared!\n");
+    }
+  });
+};
+
 // Remove a todo
 const removeTodo = (): void => {
   rl.question("Enter task ID to remove: ", (input: string) => {
@@ -93,32 +107,44 @@ const updateTodo = (): void => {
 
     if (todos.includes(todos.find((element) => element.id === idindex)!)) {
       console.log("Task found, you can update it.");
+      rl.question("Enter new task Name: ", (text3: string) => {
+        //
+        rl.question("Enter new task Priority Level: ", (text4: string) => {
+          //
+          if (text3.trim() === "") {
+            console.log("Task cannot be empty!\n");
+            setTimeout(() => {
+              showMenu();
+            }, 2000);
+          } else {
+            todos.forEach((element, index) => {
+              if (element.id === idindex) {
+                if (todos[index]!.text) {
+                  todos[index]!.text = text3;
+                  todos[index]!.priorityLevel = text4;
+                  console.log("Task updated successfully");
+                  console.log(todos);
+                  setTimeout(() => {
+                    showMenu();
+                  }, 2000);
+                } else {
+                  console.log("update error");
+                }
+              }
+            });
+          }
+
+          // return;
+        });
+        //
+      });
+      //
     } else {
       console.log("Task not found!\n");
-      setTimeout(() => {
-        showMenu();
-      }, 2000);
+
       return;
     }
 
-    rl.question("Enter new task: ", (text3: string) => {
-      if (text3.trim() === "") {
-        console.log("Task cannot be empty!\n");
-      } else {
-        todos.forEach((element, index) => {
-          if (element.id === idindex) {
-            if (todos[index]!.text) {
-              todos[index]!.text = text3;
-              console.log("Task updated successfully");
-            } else {
-              console.log("update error");
-            }
-          }
-        });
-      }
-
-      // return;
-    });
     setTimeout(() => {
       showMenu();
     }, 3000);
@@ -144,6 +170,9 @@ const handleCommand = (command: string): void => {
     case "update":
       updateTodo();
       break;
+    case "clearall":
+      clearallTodo();
+      break;
     default:
       console.log("Unknown command\n");
       showMenu();
@@ -154,7 +183,7 @@ const handleCommand = (command: string): void => {
 const showMenu = (): void => {
   console.clear();
   console.log("\n=== Todo List App ===");
-  console.log("Commands: add, list, remove, update, exit\n");
+  console.log("Commands: add, list, remove, update, Clear All, exit\n");
   process.stdout.write("> ");
   rl.question("", (command: string) => {
     handleCommand(command);
@@ -163,5 +192,5 @@ const showMenu = (): void => {
 
 // Start the app
 console.log("\n=== Todo List App ===");
-console.log("Commands: add, list, remove, update, exit\n");
+console.log("Commands: add, list, remove, update, Clear All, exit\n");
 showMenu();
