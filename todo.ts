@@ -4,7 +4,7 @@ import readline from "readline";
 type Todo = {
   id: number;
   text: string;
-}
+};
 
 // Store todos in memory (array)
 let todos: Todo[] = [];
@@ -37,7 +37,7 @@ const addTodo = (): void => {
 const listTodos = (): void => {
   console.clear();
   console.log("\n=== Todo List App ===");
-  console.log("Commands: add, list, remove, exit\n");
+  console.log("Commands: add, list, remove, update, exit\n");
 
   if (todos.length === 0) {
     console.log("No todos yet!\n");
@@ -69,39 +69,49 @@ const removeTodo = (): void => {
       todos = updatedTodos;
       console.log("Task removed successfully!\n");
     }
-
-    showMenu();
+    setTimeout(() => {
+      showMenu();
+    }, 3000);
   });
 };
 
 // Update Todo
 const updateTodo = (): void => {
- rl.question("Enter task ID to update: ", (idnum:string ) => {
-  
-    const idindex:number = parseInt(idnum);
-     rl.question("Enter new task: ", (text3: string) => {
-     if (text3.trim() === "") {
+  rl.question("Enter task ID to update: ", (idnum: string) => {
+    const idindex: number = parseInt(idnum);
+
+    if (todos.includes(todos.find((element) => element.id === idindex)!)) {
+      console.log("Task found, you can update it.");
+    } else {
+      console.log("Task not found!\n");
+      setTimeout(() => {
+        showMenu();
+      }, 2000);
+      return;
+    }
+
+    rl.question("Enter new task: ", (text3: string) => {
+      if (text3.trim() === "") {
         console.log("Task cannot be empty!\n");
       } else {
-        // const newTodo2: Todo = {
-        //   id: Date.now(),
-        //   text: text.trim(),
-      todos.forEach((element, index) => {
-          if(element.id === idindex) {
-            if(todos[index]!.text){
-              todos[index]!.text=text3;
-              console.log(todos[index]?.text);
-            }else{
+        todos.forEach((element, index) => {
+          if (element.id === idindex) {
+            if (todos[index]!.text) {
+              todos[index]!.text = text3;
+              console.log("Task updated successfully");
+            } else {
               console.log("update error");
             }
+          }
+        });
       }
+      setTimeout(() => {
+        showMenu();
+      }, 4000);
+      // return;
     });
-
-        };
-      showMenu();
-      });
- });
-}
+  });
+};
 
 // Handle command logic
 const handleCommand = (command: string): void => {
@@ -141,5 +151,5 @@ const showMenu = (): void => {
 
 // Start the app
 console.log("\n=== Todo List App ===");
-console.log("Commands: add, list, remove, exit\n");
+console.log("Commands: add, list, remove, update, exit\n");
 showMenu();
