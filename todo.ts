@@ -46,7 +46,7 @@ const addTodo = (): void => {
 const listTodos = (): void => {
   console.clear();
   console.log("\n=== Todo List App ===");
-  console.log("Commands: add, list, remove, update, clear, exit\n");
+  console.log("Commands: add, list, remove, update, clear, count, exit\n");
 
   if (todos.length === 0) {
     console.log("No todos yet!\n");
@@ -66,18 +66,28 @@ const listTodos = (): void => {
   });
 };
 
+//clear todo
 const clearallTodo = (): void => {
   rl.question("Type 'OK' for clear Todo: ", (input: string) => {
     if (input === "OK") {
       todos = [];
       console.log("Todo cleared successfully!\n");
-      setTimeout(() => {
-        showMenu();
-      }, 3000);
+      // setTimeout(() => {
+      //   showMenu();
+      // }, 3000);
     } else {
       console.log("Todo not cleared!\n");
     }
   });
+};
+
+// Count todo
+const countTodo = (): void => {
+  const count = todos.length;
+  console.log(`Count of Todo$ is ${count}\n`);
+  // setTimeout(() => {
+  //   showMenu();
+  // }, 3000);
 };
 
 // Remove a todo
@@ -173,6 +183,9 @@ const handleCommand = (command: string): void => {
     case "clear":
       clearallTodo();
       break;
+    case "count":
+      countTodo();
+      break;
     default:
       console.log("Unknown command\n");
       showMenu();
@@ -183,7 +196,7 @@ const handleCommand = (command: string): void => {
 const showMenu = (): void => {
   console.clear();
   console.log("\n=== Todo List App ===");
-  console.log("Commands: add, list, remove, update, Clear , exit\n");
+  console.log("Commands: add, list, remove, update, Clear , Count, exit\n");
   process.stdout.write("> ");
   rl.question("", (command: string) => {
     handleCommand(command);
@@ -192,5 +205,5 @@ const showMenu = (): void => {
 
 // Start the app
 console.log("\n=== Todo List App ===");
-console.log("Commands: add, list, remove, update, Clear , exit\n");
+console.log("Commands: add, list, remove, update, Clear , Count, exit\n");
 showMenu();
