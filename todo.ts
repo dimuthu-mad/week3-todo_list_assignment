@@ -4,6 +4,7 @@ import readline from "readline";
 type Todo = {
   id: number;
   text: string;
+  priorityLevel: string;
 };
 
 // Store todos in memory (array)
@@ -21,15 +22,23 @@ const addTodo = (): void => {
     if (text.trim() === "") {
       console.log("Task cannot be empty!\n");
     } else {
-      const newTodo: Todo = {
-        id: Date.now(),
-        text: text.trim(),
-      };
+      rl.question(
+        "Enter Priority Level(High/Medium/Low):",
+        (pLevel: string) => {
+          const newTodo: Todo = {
+            id: Date.now(),
+            text: text.trim(),
+            priorityLevel: pLevel.trim(),
+          };
 
-      todos.push(newTodo);
-      console.log("✓ Task added successfully!\n");
+          todos.push(newTodo);
+          console.log(todos);
+          console.log("✓ Task added successfully!\n");
+          showMenu();
+          // return;
+        },
+      );
     }
-    showMenu();
   });
 };
 
@@ -44,7 +53,9 @@ const listTodos = (): void => {
   } else {
     console.log("Your Todos:");
     todos.forEach((todo: Todo) => {
-      console.log(`${todo.id}. ${todo.text}`);
+      console.log(
+        `${todo.id} , Task Name: ${todo.text} , priority Level: ${todo.priorityLevel}`,
+      );
     });
     console.log("");
   }
