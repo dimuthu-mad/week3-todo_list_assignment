@@ -105,11 +105,12 @@ const updateTodo = (): void => {
           }
         });
       }
-      setTimeout(() => {
-        showMenu();
-      }, 4000);
+
       // return;
     });
+    setTimeout(() => {
+      showMenu();
+    }, 3000);
   });
 };
 
